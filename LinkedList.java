@@ -1,11 +1,10 @@
-public class LinkedList<E> {
+public class LinkedList<E> implements ListI<E> {
 	// Inner class
 	// Restrict access to the Node to only methods from the outer class
-	
 	/* Inner Class */
 	class Node<E> {
-		E data;
-		Node<E> next; // our point for the node
+		E data; // data with generic type
+		Node<E> next; // our pointer for the node
 		
 		//Constructor
 		public Node(E obj) {
@@ -27,7 +26,15 @@ public class LinkedList<E> {
 		currentSize = 0;
 		tail = null;
 	}
-	
+
+	/* Five boundaries:
+	 * 1. Empty
+	 * 2. Single Element
+	 * 3. Working in Middle
+	 * 4. Working at the beginning
+	 * 5. Working at the end
+	 */
+
 	public void addFirst(E obj) {
 		// Create the new node
 		Node<E> node = new Node<E>(obj);
@@ -47,7 +54,8 @@ public class LinkedList<E> {
 		// Increment the size of the linked list
 		currentSize++;
 	}
-	
+
+	/* Add Last with O(n) complexity
 	public void addLastOn(E obj) {
 		Node<E> node = new Node<E>(obj);
 		if(head == null) {
@@ -63,8 +71,10 @@ public class LinkedList<E> {
 		temp.next = node;
 		currentSize++;
 	}
-	
-	public void addLastO1(E obj) {
+	 */
+
+	// Add last with O(1) complexity
+	public void addLast(E obj) {
 		Node<E> node = new Node<E>(obj);
 		if(head == null) {
 		// When list is empty, head and tail point to node
