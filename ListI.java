@@ -1,4 +1,6 @@
 public interface ListI<E> {
+
+    public int getCurrentSize();
     public void addFirst(E obj);
     public void addLast(E obj);
     public E removeFirst();

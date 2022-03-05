@@ -27,6 +27,11 @@ public class LinkedList<E> implements ListI<E> {
 		tail = null;
 	}
 
+	// Get size of linked list
+	public int getCurrentSize() {
+		return currentSize;
+	}
+
 	/* Five boundaries:
 	 * 1. Empty
 	 * 2. Single Element
@@ -39,7 +44,9 @@ public class LinkedList<E> implements ListI<E> {
 		// Create the new node
 		Node<E> node = new Node<E>(obj);
 		if(head == null) {
-		// When list is empty, head and tail point to node
+		/* When list is empty, head and tail point to node
+
+		 */
 			head = tail = node;
 			currentSize++;
 			return;
@@ -77,7 +84,7 @@ public class LinkedList<E> implements ListI<E> {
 	public void addLast(E obj) {
 		Node<E> node = new Node<E>(obj);
 		if(head == null) {
-		// When list is empty, head and tail point to node
+	// When list is empty, head and tail point to node
 			head = tail = node;
 			currentSize++;
 			return;
@@ -88,44 +95,49 @@ public class LinkedList<E> implements ListI<E> {
 	}
 	
 	public E removeFirst() {
+	// If the list is empty, return null
 		if(head == null) 
 			return null;
-		// Store the data of first node to return
+	// Store the data of first node to temp
 		E temp = head.data;
 		
-		// Check single element list head == tail or head.next == null or currentSize == 1
+	// Check single element list using head == tail or head.next == null or currentSize == 1
 		if(head == tail) 
 			head = tail = null;
 		
-		// If regular list, point head to the second element to remove first
+	// If regular list, point head to the second element to remove first
 		else
 			head = head.next;
-		// Decrement the current size
+	// Decrement the current size
 		currentSize--;
 		return temp;
 	}
 	
 	public E removeLast() {
+	// If list is empty return null
 		if(head == null)
 			return null;
 
-		// Check single element list head == tail or head.next == null or currentSize == 1
+	// Check single element list head == tail or head.next == null or currentSize == 1
+	// If single element then call removeFirst()
 		if(head == tail) 
 			return removeFirst();
 		
-		// Create 2 temp pointers current and previous
+	// Create 2 temp pointers current and previous
 		Node<E> current = head, previous = null;
 		while (current != tail) {
 			previous = current;
-			current = current.next;
+			current = current.next; // points current to null
 		}
-		// Make the 2nd last element become the last element
+	// Store last element to last variable
+		E last = current.data;
+	// After get to the end, make the 2nd last element become the last element
 		previous.next = null;
-		// Make tail point to previous
+	// Make tail point to previous to clear the point of the last element
 		tail = previous;
 		currentSize--;
 		// Return the data of the deleted element
-		return current.data;
+		return last;
 	}
 	
 	public E remove(E obj) {
