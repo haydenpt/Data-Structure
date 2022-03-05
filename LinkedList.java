@@ -131,7 +131,7 @@ public class LinkedList<E> {
 				previous.next = current.next; // deletes the pointer from previous to current
 				return current.data;
 			}
-			// if no match, loop to the end of the list
+			// if no match, move previous and current 1 step forward
 			previous = current;
 			current = current.next;
 		}
@@ -151,6 +151,18 @@ public class LinkedList<E> {
 		}
 		// When no match at all
 		return false;
+	}
+
+	public E peekFirst() {
+		if(head == null) // if list is empty
+			return null;
+		return head.data;
+	}
+
+	public E peekLast() {
+		if(tail==null) // if list is empty
+			return null;
+		return tail.data;
 	}
 }
 
