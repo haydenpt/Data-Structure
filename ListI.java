@@ -1,4 +1,4 @@
-public interface ListI<E> {
+public interface ListI<E> extends Iterable<E> {
 
     public int getCurrentSize();
     public void addFirst(E obj);
@@ -7,4 +7,6 @@ public interface ListI<E> {
     public E removeLast();
     public boolean contains(E obj);
     public E remove(E obj);
+
+
 }

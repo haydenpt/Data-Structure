@@ -1,7 +1,7 @@
 public class LinkListTester {
 
     public static void main(String[] args) {
-        ListI<Integer> list = new LinkedList<Integer>();
+        LinkedList<Integer> list = new LinkedList<Integer>();
         int n = 10;
 
         // Test addFirst()
@@ -10,10 +10,11 @@ public class LinkListTester {
             System.out.println("Added " + n + " to first position. Current size is " + list.getCurrentSize());
         }
 
+        for(int i : list) {
+            System.out.println(i);
+        }
+
         // Test removeFirst()
-        /*
-            [10][10][10][10][10][10][10][10][10][10]
-         */
         for (int i = n - 1; i >= 0; i--) { // for loop runs for 10 times
             int x = list.removeFirst();
             System.out.println(x + " was removed. Current size is " + list.getCurrentSize());
