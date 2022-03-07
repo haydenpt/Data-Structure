@@ -5,6 +5,9 @@ public class LinkedList<E> implements ListI<E> {
 
     @Override
     public Iterator<E> iterator() {
+        /* return an instance of class that implements Iterator<E> interface
+            to use shortcode for(int i : list)
+         */
         return new IteratorHelper();
     }
 
@@ -175,6 +178,38 @@ public class LinkedList<E> implements ListI<E> {
         return current.data;
     }
 
+    public void addMiddle(E obj) {
+        // If list is empty, use addFirst() to add the element
+        if (head == null) {
+            addFirst(obj); // addFirst for empty list has return statement to break out of the method
+        }
+        // If list only has 1 element, use addLast to add to the 2nd position
+        if (head == tail) { // addLast for empty list has return statement to break out of the method
+            addLast(obj);
+        }
+        // Make new node for object
+        Node<E> node = new Node<E>(obj);
+
+        /* Set stop for pointer
+            if list length is even, add after length/2
+            if list length is odd, add after the mean (length+1)/2
+         */
+        int stop = (currentSize%2 == 0) ? (currentSize/2) : ((currentSize+1)/2);
+        // Make temp pointers and counter for pointer
+        Node<E> current = head, previous = null;
+        int counter = 1;
+
+        // Start from head, move pointer forward while count < stop
+        while (counter++ <= stop) {
+            previous = current;
+            current = current.next;
+        }
+        // After reach stop, add new node
+        previous.next = node;
+        node.next = current;
+        currentSize++;
+    }
+
     public E remove(E obj) {
         // Create 2 temp pointers current and previous
         Node<E> current = head, previous = null;
@@ -210,12 +245,14 @@ public class LinkedList<E> implements ListI<E> {
         return false;
     }
 
+    // View the data of first
     public E peekFirst() {
         if (head == null) // if list is empty
             return null;
         return head.data;
     }
 
+    // View the data of last
     public E peekLast() {
         if (tail == null) // if list is empty
             return null;
