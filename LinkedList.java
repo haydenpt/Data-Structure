@@ -3,21 +3,12 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<E> implements ListI<E> {
 
-    @Override
-    public Iterator<E> iterator() {
-        /* return an instance of class that implements Iterator<E> interface
-            to use shortcode for(int i : list)
-         */
-        return new IteratorHelper();
-    }
-
     // Inner class
     // Restrict access to the Node to only methods from the outer class
     /* Inner Class */
     class Node<E> {
         E data; // data with generic type
         Node<E> next; // our pointer for the node
-
         //Constructor
         public Node(E obj) {
             data = obj;
@@ -25,15 +16,12 @@ public class LinkedList<E> implements ListI<E> {
         }
     }
     /* Inner Class Ends */
-
     /* Iterator inner class */
     class IteratorHelper implements Iterator<E> {
         Node<E> index;
-
         public IteratorHelper() {
             index = head;
         }
-
         @Override
         public boolean hasNext() {
             // When index is null (empty or last element), return false
@@ -52,13 +40,20 @@ public class LinkedList<E> implements ListI<E> {
             return val;
         }
     }
-	/* Inner Class Ends */
+    /* Inner Class Ends */
+
+    @Override
+    public Iterator<E> iterator() {
+        /* return an instance of class that implements Iterator<E> interface
+            to use shortcode for(int i : list)
+         */
+        return new IteratorHelper();
+    }
 
     private Node<E> head, tail; // Head, tail has data type of a Node obj
     private int currentSize;
     // Increment every time we add new node
     // so that complexity is O(1) instead of O(n)
-
 
     // Outer class constructor
     public LinkedList() {
@@ -84,20 +79,15 @@ public class LinkedList<E> implements ListI<E> {
         // Create the new node
         Node<E> node = new Node<E>(obj);
         if (head == null) {
-            /* When list is empty, head and tail point to node
-
-             */
+            // When list is empty, head and tail point to node
             head = tail = node;
             currentSize++;
             return;
         }
-
         // Point the new node to the previous node, which is the current head
         node.next = head;
-
         // Move head pointer to new node
         head = node;
-
         // Increment the size of the linked list
         currentSize++;
     }
@@ -132,6 +122,40 @@ public class LinkedList<E> implements ListI<E> {
         tail.next = node; // Set the last element to point to new node
         tail = node; // Set the tail point to new node
         currentSize++;
+    }
+
+    /*
+    If list length is even, add after length/2
+    If list length is odd, add after the mean (length+1)/2
+ */
+    public void addMiddle(E obj) {
+        // If list is empty, use addFirst() to add the element
+        if (head == null) {
+            addFirst(obj); // addFirst for empty list has return statement to break out of the method
+        } else
+        // If list only has 1 element, use addLast to add to the 2nd position
+        if (head == tail) { // addLast for empty list has return statement to break out of the method
+            addLast(obj);
+        } else {
+            // Make new node for object
+            Node<E> node = new Node<E>(obj);
+
+            // Set stop for pointer
+            int stop = (currentSize % 2 == 0) ? (currentSize / 2) : ((currentSize + 1) / 2);
+            // Make temp pointers and counter for pointer
+            Node<E> current = head, previous = null;
+            int counter = 1;
+
+            // Start from head, move pointer forward while count < stop
+            while (counter++ <= stop) {
+                previous = current;
+                current = current.next;
+            }
+            // After reach stop, add new node
+            previous.next = node;
+            node.next = current;
+            currentSize++;
+        }
     }
 
     public E removeFirst() {
@@ -176,38 +200,6 @@ public class LinkedList<E> implements ListI<E> {
         currentSize--;
         // Return the data of the deleted element
         return current.data;
-    }
-
-    public void addMiddle(E obj) {
-        // If list is empty, use addFirst() to add the element
-        if (head == null) {
-            addFirst(obj); // addFirst for empty list has return statement to break out of the method
-        }
-        // If list only has 1 element, use addLast to add to the 2nd position
-        if (head == tail) { // addLast for empty list has return statement to break out of the method
-            addLast(obj);
-        }
-        // Make new node for object
-        Node<E> node = new Node<E>(obj);
-
-        /* Set stop for pointer
-            if list length is even, add after length/2
-            if list length is odd, add after the mean (length+1)/2
-         */
-        int stop = (currentSize%2 == 0) ? (currentSize/2) : ((currentSize+1)/2);
-        // Make temp pointers and counter for pointer
-        Node<E> current = head, previous = null;
-        int counter = 1;
-
-        // Start from head, move pointer forward while count < stop
-        while (counter++ <= stop) {
-            previous = current;
-            current = current.next;
-        }
-        // After reach stop, add new node
-        previous.next = node;
-        node.next = current;
-        currentSize++;
     }
 
     public E remove(E obj) {

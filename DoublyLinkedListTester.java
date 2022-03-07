@@ -1,7 +1,7 @@
-public class LinkListTester {
+public class DoublyLinkedListTester {
 
     public static void main(String[] args) {
-        ListI<Integer> list = new LinkedList<Integer>();
+        ListI<Integer> list = new DoublyLinkedList<Integer>();
         int n = 10;
 
         // Test addFirst()
@@ -27,7 +27,6 @@ public class LinkListTester {
             System.out.print("["+ i + "]");
         }
         System.out.println();
-
 
         // Test removeLast()
         for (int i = 0; i < n; i++) {
