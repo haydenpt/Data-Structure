@@ -5,7 +5,6 @@ public class Array<E> {
     private int size;
     private int counter = 0;
 
-
     public Array(int size) {
         // Calculate the middle point to start head and tail
         midIndex = (size % 2) == 0 ? (size / 2) : (size + 1) / 2;
@@ -62,7 +61,12 @@ public class Array<E> {
         return temp;
     }
 
+    // Get item at the index position
     public E getItem(int index) {
         return (E) arr[index]; // type cast the data of arr[index] to generic type E
+    }
+
+    public int getCounter() {
+        return counter;
     }
 }
