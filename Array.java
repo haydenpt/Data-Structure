@@ -5,6 +5,11 @@ public class Array<E> {
     private int size;
     private int counter = 0;
 
+    /*
+    [---][---][---][---][---][---][---]
+             <--head^ ^tail-->
+     */
+
     public Array(int size) {
         // Calculate the middle point to start head and tail
         midIndex = (size % 2) == 0 ? (size / 2) : (size + 1) / 2;
