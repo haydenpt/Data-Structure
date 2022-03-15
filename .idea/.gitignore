@@ -2,8 +2,8 @@
 /shelf/
 /workspace.xml
 /.gitignore
-../.idea
-../out
-../DS
+../.idea/
+../out/
+../DS.iml
 
 
