@@ -1,4 +1,4 @@
-public class Hashes {
+public class HashString {
     public int hashCode(String s) {
         // Constant to multiply with unicode
         int g = 31;
