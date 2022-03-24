@@ -138,12 +138,13 @@ public class Hash <K,V> implements HashI<K,V>{
 
     // Remove a Hash Element
     public boolean remove(HashElement hashElement) {
-        // Calculate hashValue of the passed object key
+        // Calculate hashValue of the passed HashElement object
         int hashValue = hashElement.key.hashCode();
         hashValue = hashValue & 0x7FFFFFFF;
         hashValue = hashValue % tableSize;
 
-        // Call remove method and pass the hashElement object
+        // Call remove() method for the linked list at 'hashValue' of 'hashArray' array
+        // and pass the hashElement object
         hashArray[hashValue].remove(hashElement);
         return true;
     }
@@ -151,15 +152,19 @@ public class Hash <K,V> implements HashI<K,V>{
     // Get value of a Hash Element
     // Given a key, return the value associated with that key
     public V getValue(K key) {
+        // Get the index value to access element in the array
         int hashValue = key.hashCode() & 0x7FFFFFFF % tableSize;
+
         // Use the iterator helper in LinkedList
+        // Iterate through the linked list at index 'hashValue' in 'hashArray' array
+        // For each hash element (he) in linked list at index 'hashValue' in 'hashArray' array
         for(HashElement<K,V> he : hashArray[hashValue]) {
+            // Compare the passed 'key' above with the key of the current 'he' linked list element
             if(((Comparable<K>)key).compareTo(he.key) == 0) {
                 return he.value; // if true return the value of the key
             }
         }
-        // If after loop and can't find any, return null
-        return null;
+        return null; // If after loop and can't find any, return null
     }
 
     // Inner Class for iteration
@@ -172,15 +177,22 @@ public class Hash <K,V> implements HashI<K,V>{
 
         // Constructor
         public IteratorHelper() {
-            T[] keys = (T[]) new Object[numElements];
-            int p = 0; // tracker
+            // Create Object array and cast to generic type T array
+            keys = (T[]) new Object[numElements];
+
+            int p = 0; // tracker of the current key
+
             for (int i = 0; i< tableSize; i++) {
-                // Store the linked list at position i to a temp list
+                // store current list at position i in the array to a 'list' linked list
                 LinkedList<HashElement<K,V>> list = hashArray[i];
-                for(HashElement<K,V> he : list) {
-                    keys[p++] = (T)he.key;
+
+                // Iterate through each element in the list above
+                for(HashElement<K,V> element : list) {
+                    // Add the iterating keys to the temp 'keys' array
+                    keys[p++] = (T) element.key;
                 }
             }
+            // Initiate the position to iterate through the 'keys' array
             position = 0;
         }
 
@@ -199,6 +211,7 @@ public class Hash <K,V> implements HashI<K,V>{
 
     @Override
     public Iterator iterator() {
+        // Utilize IteratorHelper above
         return new IteratorHelper();
     }
 }
