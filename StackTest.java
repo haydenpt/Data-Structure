@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class StackTest<E> {
     public static void main(String[] arg) {
-        Stack<Integer> stack= new ArrayStack<>(10);
+        Stack<Integer> stack= new StackArray<>(1);
         System.out.println(stack.isEmpty()); // true
         stack.push(5);
         stack.push(69);
@@ -19,8 +19,8 @@ public class StackTest<E> {
         System.out.println("s: " + Arrays.toString(s));
         System.out.println("Reversing...");
 
-        ArrayStack.reverse(a);
-        ArrayStack.reverse(s);
+        StackArray.reverse(a);
+        StackArray.reverse(s);
         System.out.println("a: " + Arrays.toString(a));
         System.out.println("s: " + Arrays.toString(s));
 

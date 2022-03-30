@@ -3,14 +3,14 @@
     which limits the ultimate size of stack concept
     All methods have time complexity of O(1), space complexity O(n)
  */
-public class ArrayStack<E> implements Stack<E> {
+public class StackArray<E> implements Stack<E> {
     public static final int SIZE = 10;
     private E[] data;
     private int top = -1; // Start with an empty array, so the top index is -1
 
     // Constructor
 
-    ArrayStack(int size) {
+    StackArray(int size) {
         // Create a new object array and cast to type E
         data = (E[]) new Object[size];
     }
@@ -28,7 +28,7 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
-    public void push(E obj) {
+    public void push(E obj) throws IllegalStateException{
         if( size() == data.length) // If size reach the length of the stack
             throw new IllegalStateException("Stack is full");
         data[++top] = obj; // Increment top and then store obj to the position
@@ -58,7 +58,7 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     public static <E> void reverse(E[] data) {
-        Stack<E> temp = new ArrayStack<>(data.length);
+        Stack<E> temp = new StackArray<>(data.length);
 
         // Copy the data array to the temp array
         for(int i = 0; i < data.length; i++)

@@ -1,4 +1,4 @@
-public interface Stack<E> {
+public interface Stack<E> { //LIFO
 
     // Return the number of elements in the stack
     int size();
