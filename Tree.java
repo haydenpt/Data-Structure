@@ -102,8 +102,59 @@ public class Tree<E> {
         return contains(obj, node.left);
     }
 
-    /* Remove method
-        If removing leaf node, set the parent node to null
-        If deleting a node with 1 child - set parents point to the child
+    /*
+        Rotation to balance an imbalanced tree
+        4       ->      6
+         \             / \
+          6           4   8
+         / \           \
+        X   8           X
+        Set temp to grandparent's right child (6)
+        Point grandparent's right child (6) to temp's left child
+            (break the 4-6 connection and make 4 the parent of 6's left child)
+        Set temp's left child to grandparent (make 4 become 6's left child)
      */
+    public Node<E> leftRotate(Node<E> node) { // Parameter is grandparent node
+        Node<E> temp = node.right; // Set temp to GP's right child
+        node.right = temp.left; // Point GP's right to temp's left
+        temp.left = node; // Set temp's left to GP
+        return temp; // return the new grandparent
+    }
+
+    /* Right rotate is similar to left rotate but the other way around
+                4     ->        6
+               /               / \
+              6               8   4
+             / \                 /
+            8   Y               Y
+     */
+    public Node<E> rightRotate(Node<E> node) {
+        Node<E> temp = node.left; // Set temp to GP's left
+        node.left = temp.right; // Set GP's left to temp's right
+        temp.right = node; // Set temp's right to GP; temp is now the GP
+        return temp;
+    }
+
+    /*
+        4       ->      4        ->     6
+         \               \             / \
+          8               6           4   8
+         /                 \
+        6                   8
+     */
+    public Node<E> rightLeftRotate(Node<E> node) { // Take GP node as parameter
+        node.right = rightRotate(node.right); // Set GP's right with the new node after rotation
+         return leftRotate(node); // Rotate the GP and return new GP
+    }
+    /*
+        4       ->      4        ->     6
+       /               /               / \
+      8               6               8   4
+       \             /
+        6           8
+     */
+    public Node<E> leftRightRotate(Node<E> node) { // Take GP node as parameter
+        node.left = leftRotate(node.left);
+        return rightRotate(node); // Rotate the GP and return new GP
+    }
 }
