@@ -23,10 +23,27 @@ public class AVLTree<E> {
         currentSize = 0;
     }
 
+    // Find the height of the current node
+    public int height(Node<E> node) {
+        // Check if tree is empty, height = 0 if true
+        if (root == null) {
+            return 0;
+        }
+        else {
+            // Initialize the height of both side
+            int leftHeight = 0, rightHeight = 0;
+
+            // Trickle down the left subtree
+            if(node.left != null) {
+                leftHeight = height(node.left);
+            }
+        }
+    }
+
     public void addNode(E obj) {
         Node<E> node = new Node<E>(obj);
-        if (root == null) {
-            root = node;
+        if (root == null) { // if tree is empty
+            root = node;    // add node as the root node
             currentSize++;
             return;
         }
@@ -36,16 +53,16 @@ public class AVLTree<E> {
     }
 
     // Recursive add method
-    public void add(Node<> parent, Node<E> newNode) {
+    public void add(Node<E> parent, Node<E> newNode) {
         // If newNode.data > parent.data then add to the right side
         if (((Comparable<E>)newNode.data).compareTo(parent.data) > 0) {
-            // If at the bottom, add new node there
+            // If at the bottom right, add new node there
             if (parent.right == null) {
                 parent.right = newNode;
                 newNode.parent = parent; // Set newNode's parent to current node, otherwise it's null
                 currentSize++;
             }
-            // If not at the bottom, call recursive add method
+            // If not at the bottom, call recursive add method to trickle down the tree
             else {
                 add(parent.right, newNode);
             }
@@ -73,7 +90,7 @@ public class AVLTree<E> {
         Keep moving up until reach the root
      */
     public void checkBalance(Node<E> node) { // parameter is the recently added node
-        // If one side has more children than the other, call re-balance at the current node
+        // If one side has 2+ more children than the other, call re-balance at the current node
         if (
                 (height(node.left) - height(node.right) > 1) ||
                 (height(node.left) - height(node.right) < -1)
