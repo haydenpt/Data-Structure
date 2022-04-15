@@ -24,6 +24,9 @@ public class AVLTree<E> {
     }
 
     // Find the height of the current node
+    // Height of empty tree is -1,
+    //
+    //
     public int height(Node<E> node) {
         // Check if tree is empty, height = 0 if true
         if (root == null) {
@@ -37,8 +40,46 @@ public class AVLTree<E> {
             if(node.left != null) {
                 leftHeight = height(node.left);
             }
+
+            // Trickle down the right subtree
+            if(node.right != null) {
+                rightHeight = height(node.right);
+            }
+
+            // Take the higher value among 2 subtree
+            int max = (leftHeight > rightHeight) ? leftHeight : rightHeight;
+
+            // Add 1 to include the root -> height
+            return (max + 1);
         }
     }
+
+    // ROTATE METHODS
+
+    public Node<E> leftRotate(Node<E> node) { // Parameter is grandparent node
+        Node<E> temp = node.right; // Set temp to GP's right child
+        node.right = temp.left; // Point GP's right to temp's left
+        temp.left = node; // Set temp's left to GP
+        return temp; // return the new grandparent
+    }
+
+    public Node<E> rightRotate(Node<E> node) {
+        Node<E> temp = node.left; // Set temp to GP's left
+        node.left = temp.right; // Set GP's left to temp's right
+        temp.right = node; // Set temp's right to GP; temp is now the GP
+        return temp;
+    }
+
+    public Node<E> rightLeftRotate(Node<E> node) { // Take GP node as parameter
+        node.right = rightRotate(node.right); // Set GP's right with the new node after rotation
+         return leftRotate(node); // Rotate the GP and return new GP
+    }
+
+    public Node<E> leftRightRotate(Node<E> node) { // Take GP node as parameter
+        node.left = leftRotate(node.left);
+        return rightRotate(node); // Rotate the GP and return new GP
+    }
+    // END OF ROTATE METHODS
 
     public void addNode(E obj) {
         Node<E> node = new Node<E>(obj);
@@ -122,16 +163,22 @@ public class AVLTree<E> {
         }
 
         // If right > left, go the right path
-        if (height(node.left) - height(node.right) > 1) {
-            // If left child left subtree -> right rotate
-            if (height(node.left.left) > height(node.left.right)) {
-                node = rightRotate(node); // replace node with new rotated values
+        else {
+            // If right child left subtree -> left rotate
+            if (height(node.right.left) > height(node.right.right)) {
+                node = leftRotate(node); // replace node with new rotated values
             }
-            else { // If left child right subtree -> left right rotate
-                node = leftRightRotate(node); // replace node with new rotated values
+            else { // If right child right subtree -> left right rotate
+                node = rightLeftRotate(node); // replace node with new rotated values
 
             }
         }
+
+        // If we get to the root node, point root to the new node and exit
+        if (node.parent == null) {
+            root = node;
+        }
+
     }
 
 }
