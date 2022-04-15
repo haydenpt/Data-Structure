@@ -59,6 +59,7 @@ public class AVLTree<E> {
     public Node<E> leftRotate(Node<E> node) { // Parameter is grandparent node
         Node<E> temp = node.right; // Set temp to GP's right child
         node.right = temp.left; // Point GP's right to temp's left
+        temp.left.parent = node; // Point parent of temp's left to node
         temp.left = node; // Set temp's left to GP
         return temp; // return the new grandparent
     }
@@ -66,6 +67,7 @@ public class AVLTree<E> {
     public Node<E> rightRotate(Node<E> node) {
         Node<E> temp = node.left; // Set temp to GP's left
         node.left = temp.right; // Set GP's left to temp's right
+        temp.right.parent = node; // POin parant of temp's right to node
         temp.right = node; // Set temp's right to GP; temp is now the GP
         return temp;
     }
