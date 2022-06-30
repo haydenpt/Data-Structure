@@ -67,7 +67,7 @@ public class AVLTree<E> {
     public Node<E> rightRotate(Node<E> node) {
         Node<E> temp = node.left; // Set temp to GP's left
         node.left = temp.right; // Set GP's left to temp's right
-        temp.right.parent = node; // POin parant of temp's right to node
+        temp.right.parent = node; // Point parent of temp's right to node
         temp.right = node; // Set temp's right to GP; temp is now the GP
         return temp;
     }
